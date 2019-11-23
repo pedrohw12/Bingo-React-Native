@@ -5,20 +5,40 @@ import {
   JogoContainer, 
   Button, 
   Title, 
-  Text 
+  Text,
+  FlatList,  
 } from './styles';
 
+import api from '../../services/api';
+
 class Cadastro extends Component {
+  state = {
+    loading: true,
+    number: [],
+  };
+
   static navigationOptions = {
     title: 'TELA LEITURA',
   };
+
+  async getNumber() {
+    const response = await api.get('/jogos');
+    alert(JSON.stringify(response));
+  }
+
+   componentDidMount(){
+    this.getNumber(); 
+  }
+
   render() {
     return (
       <Container>
         <JogoContainer>
-          <Text>1475</Text>
-          <Text>213</Text>
-          <Text>415</Text>
+        <FlatList
+          data= {this.state.number}
+          renderItem= {({item}) => <Jogos data={item} />}
+          keyExtractor= {number=> String(number)}
+        />
         </JogoContainer>
         <BtnContainer>
           <Button onPress={() => this.props.navigation.navigate('Cadastro')}>
@@ -26,6 +46,14 @@ class Cadastro extends Component {
           </Button>
         </BtnContainer>
       </Container>
+    );
+  }
+}
+
+class Jogos extends Component {
+  render() {
+    return (
+      <Title> ... </Title>
     );
   }
 }

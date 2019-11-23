@@ -30,3 +30,5 @@ export const Title = styled.Text`
 `;
 
 export const Text = styled.Text``;
+
+export const FlatList = styled.FlatList``;
