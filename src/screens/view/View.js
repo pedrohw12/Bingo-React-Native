@@ -9,6 +9,7 @@ import {
   FlatList,  
 } from './styles';
 
+import axios from 'axios';
 import api from '../../services/api';
 
 class Cadastro extends Component {
@@ -21,13 +22,14 @@ class Cadastro extends Component {
     title: 'TELA LEITURA',
   };
 
-  async getNumber() {
-    const response = await api.get('/jogos');
-    alert(JSON.stringify(response));
-  }
-
    componentDidMount(){
-    this.getNumber(); 
+    axios.get('http://localhost:3333/jogos')
+      .then(response => {
+        alert(response.data);
+      }) 
+      .catch(error => {
+        alert(error);
+      })
   }
 
   render() {
