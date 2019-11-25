@@ -33,3 +33,5 @@ export const Title = styled.Text`
   font-weight: bold;
   color: #fff;
 `;
+
+export const Text = styled.Text``;

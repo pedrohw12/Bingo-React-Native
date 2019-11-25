@@ -1,16 +1,21 @@
 import React, { useState } from 'react';
-import { Container, Input, Button, BtnContainer, Title } from './styles';
+import { Container, Input, Button, BtnContainer, Title, Text } from './styles';
 
 import api from '../../services/api';
 
 function Cadastro() {
+  const [ value, setValue ] = useState();
+
   function handleSubmit() {
-    alert('ola')
-  }
+    api.post('/registro', {
+      number: value,
+    });
+}
 
     return (
       <Container>
-        {/* <Input onChangeText={(e)=> setValue(e)} keyboardType="numeric" /> */}
+        <Text> {value} </Text>
+        <Input onChangeText={(e)=> setValue(e)} keyboardType="numeric" />
         <BtnContainer>
           <Button onPress={() => handleSubmit()}>
             <Title>CADASTRAR</Title>

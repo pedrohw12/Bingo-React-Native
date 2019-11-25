@@ -1,4 +1,4 @@
-import React,{ Component } from 'react';
+import React,{ useState, useEffect } from 'react';
 import { 
   Container, 
   BtnContainer, 
@@ -9,55 +9,43 @@ import {
   FlatList,  
 } from './styles';
 
-import axios from 'axios';
+import uuid from 'uuid/v4';
+
 import api from '../../services/api';
 
-class Cadastro extends Component {
-  state = {
-    loading: true,
-    number: [],
-  };
+const Cadastro = ({navigation}) => {
+  const [ numbers, setNumbers ] = useState('');
 
-  static navigationOptions = {
-    title: 'TELA LEITURA',
-  };
-
-   componentDidMount(){
-    axios.get('http://localhost:3333/jogos')
-      .then(response => {
-        alert(response.data);
-      }) 
-      .catch(error => {
-        alert(error);
-      })
+  async function teste() {
+    const response = await api.get('/jogos');
+    const data = response.data.jogos.map(
+      item => item.number
+    );
+    // console.log('aqui '+data) 
+    setNumbers(data)
+    // console.log('aqui'+numbers);
   }
 
-  render() {
-    return (
+  useEffect(()=>{
+    teste();
+  },[]);
+
+    return ( 
       <Container>
         <JogoContainer>
         <FlatList
-          data= {this.state.number}
-          renderItem= {({item}) => <Jogos data={item} />}
-          keyExtractor= {number=> String(number)}
+          data= {numbers}
+          renderItem= {({item}) => (<Text> -   {item} </Text>)}
+          keyExtractor= {item=> uuid(item.id)}
         />
         </JogoContainer>
         <BtnContainer>
-          <Button onPress={() => this.props.navigation.navigate('Cadastro')}>
+          <Button onPress={() => navigation.navigate('Cadastro')}>
             <Title>CADASTRAR OUTRA</Title>
           </Button>
         </BtnContainer>
       </Container>
-    );
-  }
-}
-
-class Jogos extends Component {
-  render() {
-    return (
-      <Title> ... </Title>
-    );
-  }
+  );
 }
 
 export default Cadastro;

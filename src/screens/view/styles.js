@@ -16,7 +16,6 @@ export const JogoContainer = styled.View`
 
 export const Button = styled.TouchableOpacity`
   flex: 1;
-  justify-content: center;
   align-items: center;
   background: #333;
   padding: 10px;
